@@ -1,0 +1,6 @@
+framework module Pods_ExMoya {
+  umbrella header "Pods-ExMoya-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -83,6 +83,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		C61F719F27672F9800BC3C3D /* Section */ = {
+			isa = PBXGroup;
+			children = (
+				C6CFCBCE2766497C00F06772 /* PhotoSection.swift */,
+			);
+			path = Section;
+			sourceTree = "<group>";
+		};
 		C6CFCB2E276352BE00F06772 = {
 			isa = PBXGroup;
 			children = (
@@ -104,6 +112,7 @@
 		C6CFCB39276352BF00F06772 /* ExMoya */ = {
 			isa = PBXGroup;
 			children = (
+				C61F719F27672F9800BC3C3D /* Section */,
 				C6CFCBC82766445800F06772 /* Utils */,
 				C6CFCBD027664AAF00F06772 /* Views */,
 				C6CFCB9B2764E79300F06772 /* Model */,
@@ -115,7 +124,6 @@
 				C6CFCB43276352C100F06772 /* Assets.xcassets */,
 				C6CFCB45276352C100F06772 /* LaunchScreen.storyboard */,
 				C6CFCB48276352C100F06772 /* Info.plist */,
-				C6CFCBCE2766497C00F06772 /* PhotoSection.swift */,
 			);
 			path = ExMoya;
 			sourceTree = "<group>";

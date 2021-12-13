@@ -105,7 +105,7 @@ class ViewController: UIViewController {
   
   private func loadImage() {
     let photoRequest = PhotoRequest()
-    MyAPI.photos(photoRequest)
+    MyAPI.getPhotos(photoRequest)
       .request()
       .map {
         let jsonString = try $0.mapString().removedEscapeCharacters
@@ -119,9 +119,13 @@ class ViewController: UIViewController {
         return newResponse
       }
       .map(Photo.self, using: MyAPI.jsonDecoder)
-      .do(onSuccess: { print($0) })
-      .subscribe()
+      .asObservable()
+      .bind(onNext: self.updatePhoto)
       .disposed(by: disposeBag)
+  }
+  
+  private func updatePhoto(_ photo: Photo) {
+    photoDataSource.accept([PhotoSection.result([PhotoSectionItem.result(photo)])])
   }
   
   // MARK: DataSources

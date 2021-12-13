@@ -12,7 +12,7 @@ import Moya
 extension MyAPI {
   func getTask() -> Task {
     switch self {
-    case .photos(let request):
+    case .getPhotos(let request):
       return .requestParameters(parameters: request.toDictionary(), encoding: URLEncoding.queryString)
     }
   }

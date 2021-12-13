@@ -10,7 +10,7 @@ import Foundation
 extension MyAPI {
   func getPath() -> String {
     switch self {
-    case .photos:
+    case .getPhotos:
       return "services/feeds/photos_public.gne"
     }
   }

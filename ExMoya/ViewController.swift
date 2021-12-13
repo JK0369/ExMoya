@@ -108,23 +108,18 @@ class ViewController: UIViewController {
     MyAPI.photos(photoRequest)
       .request()
       .map {
-        let jsonString = try $0.mapString()
-        let removedEscape1 = jsonString.replacingOccurrences(of: "\\\"", with: "")
-        let removedEscape2 = removedEscape1.replacingOccurrences(of: "\\", with: "")
-        let value = removedEscape2.data(using: .utf8)!
-        
+        let jsonString = try $0.mapString().removedEscapeCharacters
+        let value = jsonString.data(using: .utf8)!
         let newResponse = Response(
           statusCode: $0.statusCode,
           data: value,
           request: $0.request,
           response: $0.response
         )
-        
         return newResponse
       }
       .map(Photo.self, using: MyAPI.jsonDecoder)
       .do(onSuccess: { print($0) })
-      .asObservable()
       .subscribe()
       .disposed(by: disposeBag)
   }

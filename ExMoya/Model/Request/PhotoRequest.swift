@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PhotoRequet: ModelType {
+struct PhotoRequest: ModelType {
   var tags = "landscape, portrait"
   var tagmode = "any"
   var format = "json"

@@ -125,28 +125,26 @@ extension MyAPI {
   
   static var jsonDecoder: JSONDecoder {
     let decoder = JSONDecoder()
-    decoder.keyDecodingStrategy = .convertFromSnakeCase
     return decoder
   }
   
   func request(
     file: StaticString = #file,
     function: StaticString = #function,
-    line: UInt = #line,
-    useToastAlert: Bool = true
+    line: UInt = #line
   ) -> Single<Response> {
     
     let endpoint = MyAPI.Wrapper(base: self)
     let requestString = "\(endpoint.method) \(endpoint.path)"
-    
+
     return Self.moya.rx.request(endpoint)
       .filterSuccessfulStatusCodes()
       .catch(self.handleInternetConnection)
       .catch(self.handleTimeOut)
       .catch(self.handleREST)
       .do(
-        onSuccess: { value in
-          let requestContent = "SUCCESS: \(requestString) (\(value.statusCode))"
+        onSuccess: { response in
+          let requestContent = "SUCCESS: \(requestString) (\(response.statusCode))"
           print(requestContent, file, function, line)
         },
         onError: { rawError in

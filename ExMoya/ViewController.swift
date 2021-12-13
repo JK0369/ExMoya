@@ -12,6 +12,7 @@ import RxDataSources
 import RxCocoa
 import Reusable
 import RxSwift
+import Moya
 
 class ViewController: UIViewController {
   
@@ -103,12 +104,29 @@ class ViewController: UIViewController {
   }
   
   private func loadImage() {
-    let photoRequest = PhotoRequet()
+    let photoRequest = PhotoRequest()
     MyAPI.photos(photoRequest)
       .request()
+      .map {
+        let jsonString = try $0.mapString()
+        let removedEscape1 = jsonString.replacingOccurrences(of: "\\\"", with: "")
+        let removedEscape2 = removedEscape1.replacingOccurrences(of: "\\", with: "")
+        let value = removedEscape2.data(using: .utf8)!
+        
+        let newResponse = Response(
+          statusCode: $0.statusCode,
+          data: value,
+          request: $0.request,
+          response: $0.response
+        )
+        
+        return newResponse
+      }
       .map(Photo.self, using: MyAPI.jsonDecoder)
       .do(onSuccess: { print($0) })
       .asObservable()
+      .subscribe()
+      .disposed(by: disposeBag)
   }
   
   // MARK: DataSources

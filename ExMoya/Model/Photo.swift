@@ -11,7 +11,6 @@ struct Photo: ModelType {
   let title: String
   let link: String
   let description: String
-  let modified: Date
   let generator: String
   let items: [Item]
   
@@ -19,16 +18,13 @@ struct Photo: ModelType {
     let title: String
     let link: String
     let media: Media
-    let dateTaken: Date
     let itemDescription: String
-    let published: Date
     let author, authorID, tags: String
     
     enum CodingKeys: String, CodingKey {
       case title, link, media
-      case dateTaken = "date_taken"
       case itemDescription = "description"
-      case published, author
+      case author
       case authorID = "author_id"
       case tags
     }

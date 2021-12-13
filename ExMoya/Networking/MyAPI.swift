@@ -8,7 +8,7 @@
 import Moya
 
 enum MyAPI {
-  case photos(PhotoRequet)
+  case photos(PhotoRequest)
 }
 
 // MARK: MyAPI+TargetType

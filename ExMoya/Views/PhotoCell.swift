@@ -9,7 +9,6 @@ import UIKit
 import Reusable
 
 class PhotoCell: UICollectionViewCell, Reusable {
-  
   // MARK: Constants
   private enum Metric {
     static let cornerRadius = 48.0
@@ -42,6 +41,17 @@ class PhotoCell: UICollectionViewCell, Reusable {
   @available(*, unavailable)
   required init?(coder: NSCoder) {
     fatalError("init(coder: NSCoder) has not been implemented")
+  }
+  
+  func setImage(photo: Photo.Item) {
+    photoImageView.setImage(
+      with: photo.media.m,
+      placeholder: nil,
+      completion: { [weak self] result in
+        guard let image = try? result.get().image else { return }
+        self?.photoImageView.image = image
+      }
+    )
   }
   
 }

@@ -10,23 +10,21 @@ import Foundation
 struct Photo: ModelType {
   let title: String
   let link: String
-  let description: String
-  let generator: String
   let items: [Item]
   
   struct Item: ModelType {
     let title: String
     let link: String
     let media: Media
-    let itemDescription: String
-    let author, authorID, tags: String
+    let author: String
+    let authorID: String
     
     enum CodingKeys: String, CodingKey {
-      case title, link, media
-      case itemDescription = "description"
+      case title
+      case link
+      case media
       case author
       case authorID = "author_id"
-      case tags
     }
     
     static func == (lhs: Item, rhs: Item) -> Bool {

@@ -12,7 +12,7 @@ enum PhotoSection {
 }
 
 enum PhotoSectionItem: Equatable {
-  case result(Photo)
+  case result(Photo.Item)
 }
 
 extension PhotoSection: SectionModelType {

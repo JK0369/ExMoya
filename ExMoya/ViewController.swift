@@ -17,8 +17,11 @@ import Moya
 class ViewController: UIViewController {
   
   struct Metric {
-    static let collectionViewItemSize = CGSize(width: 96, height: 96)
-    static let collectionViewSpacing = 20.0
+    static let collectionViewItemSize = CGSize(
+      width: (UIScreen.main.bounds.width - 32.0 - Self.collectionViewSpacing) / 3.0,
+      height: 96
+    )
+    static let collectionViewSpacing = 8.0
     static let collectionViewContentInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
   }
   
@@ -91,7 +94,6 @@ class ViewController: UIViewController {
     }
     
     self.photoDataSource
-      .distinctUntilChanged()
       .bind(to: self.collectionView.rx.items(dataSource: collectionViewDataSource))
       .disposed(by: disposeBag)
   }
@@ -109,7 +111,7 @@ class ViewController: UIViewController {
       .request()
       .map {
         let jsonString = try $0.mapString().removedEscapeCharacters
-        let value = jsonString.data(using: .utf8)!
+        guard let value = jsonString.data(using: .utf8) else { return $0 }
         let newResponse = Response(
           statusCode: $0.statusCode,
           data: value,
@@ -125,7 +127,10 @@ class ViewController: UIViewController {
   }
   
   private func updatePhoto(_ photo: Photo) {
-    photoDataSource.accept([PhotoSection.result([PhotoSectionItem.result(photo)])])
+    photo.items.forEach { [weak self] item in
+      guard let previusItem = self?.photoDataSource.value else { return }
+      photoDataSource.accept(previusItem + [PhotoSection.result([PhotoSectionItem.result(item)])])
+    }
   }
   
   // MARK: DataSources
@@ -137,16 +142,7 @@ class ViewController: UIViewController {
     switch item {
     case let .result(photo):
       let cell = collectionView.dequeueReusableCell(for: indexPath) as PhotoCell
-      cell.photoImageView.setImage(
-        with: photo.items.first?.media.m,
-        placeholder: nil,
-        completion: { result in
-          guard
-            let image = try? result.get().image
-          else { return }
-          cell.photoImageView.image = image
-        }
-      )
+      cell.setImage(photo: photo)
       return cell
     }
   }

@@ -44,6 +44,7 @@ class PhotoCell: UICollectionViewCell, Reusable {
   }
   
   func setImage(photo: Photo.Item) {
+    photoImageView.tintColor = .lightGray.withAlphaComponent(0.5)
     photoImageView.setImage(
       with: photo.media.urlString,
       placeholder: UIImage(systemName: "circle.dashed"),

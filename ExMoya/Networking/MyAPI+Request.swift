@@ -79,11 +79,12 @@ extension MyAPI {
       configuration.urlCredentialStorage = nil
       let session = Session(configuration: configuration)
       
-      return MoyaProvider<MyAPI.Wrapper>(endpointClosure: { target in
-        MoyaProvider.defaultEndpointMapping(for: target)
-      },
-                                         session: session,
-                                         plugins: plugins()
+      return MoyaProvider<MyAPI.Wrapper>(
+        endpointClosure: { target in
+          MoyaProvider.defaultEndpointMapping(for: target)
+        },
+        session: session,
+        plugins: plugins()
       )
     }
   }

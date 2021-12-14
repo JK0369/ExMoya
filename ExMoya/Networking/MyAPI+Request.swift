@@ -145,7 +145,7 @@ extension MyAPI {
       .catch(self.handleREST)
       .do(
         onSuccess: { response in
-          let requestContent = "SUCCESS: \(requestString) (\(response.statusCode))"
+          let requestContent = "🛰 SUCCESS: \(requestString) (\(response.statusCode))"
           print(requestContent, file, function, line)
         },
         onError: { rawError in
@@ -161,13 +161,13 @@ extension MyAPI {
               guard let key = errorDictionary?.first?.key else { return }
               let message: String
               if let description = errorDictionary?[key] as? String {
-                message = "FAILURE: \(requestString) (\(response.statusCode)\n\(key): \(description)"
+                message = "🛰 FAILURE: \(requestString) (\(response.statusCode)\n\(key): \(description)"
               } else if let description = (errorDictionary?[key] as? [String]) {
-                message = "FAILURE: \(requestString) (\(response.statusCode))\n\(key): \(description)"
+                message = "🛰 FAILURE: \(requestString) (\(response.statusCode))\n\(key): \(description)"
               } else if let rawString = String(data: response.data, encoding: .utf8) {
-                message = "FAILURE: \(requestString) (\(response.statusCode))\n\(rawString)"
+                message = "🛰 FAILURE: \(requestString) (\(response.statusCode))\n\(rawString)"
               } else {
-                message = "FAILURE: \(requestString) (\(response.statusCode)"
+                message = "🛰 FAILURE: \(requestString) (\(response.statusCode)"
               }
               print(message)
             }

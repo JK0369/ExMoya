@@ -45,8 +45,8 @@ class PhotoCell: UICollectionViewCell, Reusable {
   
   func setImage(photo: Photo.Item) {
     photoImageView.setImage(
-      with: photo.media.m,
-      placeholder: nil,
+      with: photo.media.urlString,
+      placeholder: UIImage(systemName: "circle.dashed"),
       completion: { [weak self] result in
         guard let image = try? result.get().image else { return }
         self?.photoImageView.image = image

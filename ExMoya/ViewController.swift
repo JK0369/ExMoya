@@ -128,11 +128,8 @@ class ViewController: UIViewController {
   
   private func updatePhoto(_ photo: Photo) {
     let previusPhotos = photoDataSource.value
-    
-    var newSectionItems = [PhotoSectionItem]()
-    photo.items.forEach { newSectionItems.append(.result($0)) }
-    newSectionItems.append(contentsOf: previusPhotos.first?.items ?? [])
-    photoDataSource.accept([PhotoSection.result(newSectionItems)])
+    let newSectionItems = photo.items.map(PhotoSectionItem.result)
+    photoDataSource.accept(previusPhotos + [PhotoSection.result(newSectionItems)])
   }
   
   // MARK: DataSources

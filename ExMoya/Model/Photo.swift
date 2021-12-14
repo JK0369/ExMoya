@@ -32,7 +32,11 @@ struct Photo: ModelType {
     }
     
     struct Media: Codable {
-      let m: String
+      let urlString: String
+      
+      enum CodingKeys: String, CodingKey {
+        case urlString = "m"
+      }
     }
   }
   
